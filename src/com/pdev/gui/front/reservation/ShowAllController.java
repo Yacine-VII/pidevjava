@@ -21,7 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -73,8 +72,8 @@ public class ShowAllController implements Initializable {
 
             HBox innerContainer = ((HBox) ((AnchorPane) ((AnchorPane) parent).getChildren().get(0)).getChildren().get(0));
             ((Text) innerContainer.lookup("#abonnementText")).setText("Abonnement : " + reservation.getAbonnement());
-            ((Text) innerContainer.lookup("#joueurText")).setText("Abonnement : " + reservation.getJoueur());
-            ((Text) innerContainer.lookup("#entraineurText")).setText("Abonnement : " + reservation.getEntraineur());
+            ((Text) innerContainer.lookup("#joueurText")).setText("joueur : " + reservation.getJoueur());
+            ((Text) innerContainer.lookup("#entraineurText")).setText("entraineur : " + reservation.getEntraineur());
             ((Text) innerContainer.lookup("#sujetText")).setText("Sujet : " + reservation.getSujet());
             ((Text) innerContainer.lookup("#dateText")).setText("Date : " + reservation.getDate());
             ((Text) innerContainer.lookup("#heureText")).setText("Heure : " + reservation.getHeure());

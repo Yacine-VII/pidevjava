@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import java.time.LocalDate;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -144,6 +145,22 @@ public class ManageController implements Initializable {
             AlertUtils.makeInformation("Choisir une date pour date");
             return false;
         }
+        
+    LocalDate selectedDate = dateDP.getValue();
+
+    LocalDate currentDate = LocalDate.now();
+
+    if (selectedDate.isBefore(currentDate)) {
+        AlertUtils.makeInformation("La date ne doit pas être dans le passé");
+        return false;
+    }
+
+    LocalDate maxDate = currentDate.plusDays(60);
+
+    if (selectedDate.isAfter(maxDate)) {
+        AlertUtils.makeInformation("La date ne doit pas être plus de 60 jours à l'avance");
+        return false;
+    }
 
 
         if (heureTF.getText().isEmpty()) {

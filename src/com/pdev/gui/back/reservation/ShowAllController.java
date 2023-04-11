@@ -72,9 +72,9 @@ public class ShowAllController implements Initializable {
             parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.FXML_BACK_MODEL_RESERVATION)));
 
             HBox innerContainer = ((HBox) ((AnchorPane) ((AnchorPane) parent).getChildren().get(0)).getChildren().get(0));
-            ((Text) innerContainer.lookup("#abonnementText")).setText("Abonnement : " + reservation.getAbonnement());
-            ((Text) innerContainer.lookup("#joueurText")).setText("Abonnement : " + reservation.getJoueur());
-            ((Text) innerContainer.lookup("#entraineurText")).setText("Abonnement : " + reservation.getEntraineur());
+            ((Text) innerContainer.lookup("#abonnementText")).setText("Abonnement Name : " + reservation.getAbonnement());
+            ((Text) innerContainer.lookup("#joueurText")).setText("Joueur : " + reservation.getJoueur());
+            ((Text) innerContainer.lookup("#entraineurText")).setText("Entraineur : " + reservation.getEntraineur());
             ((Text) innerContainer.lookup("#sujetText")).setText("Sujet : " + reservation.getSujet());
             ((Text) innerContainer.lookup("#dateText")).setText("Date : " + reservation.getDate());
             ((Text) innerContainer.lookup("#heureText")).setText("Heure : " + reservation.getHeure());

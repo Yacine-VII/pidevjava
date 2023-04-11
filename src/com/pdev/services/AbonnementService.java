@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+//Each method uses a PreparedStatement object to execute an SQL statement
+//and catch any SQL exception that might occur during the process.
 
 public class AbonnementService {
 
