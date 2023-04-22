@@ -1,8 +1,10 @@
 package com.pdev.gui.back.reservation;
 
 
+import com.pdev.entities.Abonnement;
 import com.pdev.entities.Reservation;
 import com.pdev.gui.back.MainWindowController;
+import com.pdev.services.AbonnementService;
 import com.pdev.services.ReservationService;
 import com.pdev.utils.AlertUtils;
 import com.pdev.utils.Constants;
@@ -15,7 +17,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import java.time.LocalDate;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 public class ManageController implements Initializable {
 
     @FXML
-    public ComboBox<RelationObject> abonnementCB;
+    public ComboBox<Abonnement> abonnementCB;
     @FXML
     public ComboBox<RelationObject> joueurCB;
     @FXML
@@ -45,7 +46,7 @@ public class ManageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        for (RelationObject abonnement : ReservationService.getInstance().getAllAbonnements()) {
+        for (Abonnement abonnement : AbonnementService.getInstance().getAll()) {
             abonnementCB.getItems().add(abonnement);
         }
         for (RelationObject joueur : ReservationService.getInstance().getAllJoueurs()) {
@@ -145,22 +146,6 @@ public class ManageController implements Initializable {
             AlertUtils.makeInformation("Choisir une date pour date");
             return false;
         }
-        
-    LocalDate selectedDate = dateDP.getValue();
-
-    LocalDate currentDate = LocalDate.now();
-
-    if (selectedDate.isBefore(currentDate)) {
-        AlertUtils.makeInformation("La date ne doit pas être dans le passé");
-        return false;
-    }
-
-    LocalDate maxDate = currentDate.plusDays(60);
-
-    if (selectedDate.isAfter(maxDate)) {
-        AlertUtils.makeInformation("La date ne doit pas être plus de 60 jours à l'avance");
-        return false;
-    }
 
 
         if (heureTF.getText().isEmpty()) {

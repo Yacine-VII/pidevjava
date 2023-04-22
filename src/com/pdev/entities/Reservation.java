@@ -8,14 +8,14 @@ import java.time.LocalDate;
 public class Reservation {
 
     private int id;
-    private RelationObject abonnement;
+    private Abonnement abonnement;
     private RelationObject joueur;
     private RelationObject entraineur;
     private String sujet;
     private LocalDate date;
     private String heure;
 
-    public Reservation(int id, RelationObject abonnement, RelationObject joueur, RelationObject entraineur, String sujet, LocalDate date, String heure) {
+    public Reservation(int id, Abonnement abonnement, RelationObject joueur, RelationObject entraineur, String sujet, LocalDate date, String heure) {
         this.id = id;
         this.abonnement = abonnement;
         this.joueur = joueur;
@@ -25,7 +25,7 @@ public class Reservation {
         this.heure = heure;
     }
 
-    public Reservation(RelationObject abonnement, RelationObject joueur, RelationObject entraineur, String sujet, LocalDate date, String heure) {
+    public Reservation(Abonnement abonnement, RelationObject joueur, RelationObject entraineur, String sujet, LocalDate date, String heure) {
         this.abonnement = abonnement;
         this.joueur = joueur;
         this.entraineur = entraineur;
@@ -42,11 +42,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public RelationObject getAbonnement() {
+    public Abonnement getAbonnement() {
         return abonnement;
     }
 
-    public void setAbonnement(RelationObject abonnement) {
+    public void setAbonnement(Abonnement abonnement) {
         this.abonnement = abonnement;
     }
 

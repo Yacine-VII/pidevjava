@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -35,6 +36,8 @@ public class ShowAllController implements Initializable {
     public Button addButton;
     @FXML
     public VBox mainVBox;
+    @FXML
+    public TextField searchTF;
 
     List<Reservation> listReservation;
 
@@ -42,17 +45,20 @@ public class ShowAllController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         listReservation = ReservationService.getInstance().getAll();
 
-        displayData();
+        displayData("");
     }
 
-    void displayData() {
+    void displayData(String searchText) {
         mainVBox.getChildren().clear();
 
         Collections.reverse(listReservation);
 
         if (!listReservation.isEmpty()) {
             for (Reservation reservation : listReservation) {
+                if (reservation.getAbonnement().getTitre().toLowerCase().startsWith(searchText.toLowerCase())) {
                     mainVBox.getChildren().add(makeReservationModel(reservation));
+                }
+
             }
         } else {
             StackPane stackPane = new StackPane();
@@ -72,8 +78,8 @@ public class ShowAllController implements Initializable {
 
             HBox innerContainer = ((HBox) ((AnchorPane) ((AnchorPane) parent).getChildren().get(0)).getChildren().get(0));
             ((Text) innerContainer.lookup("#abonnementText")).setText("Abonnement : " + reservation.getAbonnement());
-            ((Text) innerContainer.lookup("#joueurText")).setText("joueur : " + reservation.getJoueur());
-            ((Text) innerContainer.lookup("#entraineurText")).setText("entraineur : " + reservation.getEntraineur());
+            ((Text) innerContainer.lookup("#joueurText")).setText("Joueur : " + reservation.getJoueur());
+            ((Text) innerContainer.lookup("#entraineurText")).setText("Entraineur : " + reservation.getEntraineur());
             ((Text) innerContainer.lookup("#sujetText")).setText("Sujet : " + reservation.getSujet());
             ((Text) innerContainer.lookup("#dateText")).setText("Date : " + reservation.getDate());
             ((Text) innerContainer.lookup("#heureText")).setText("Heure : " + reservation.getHeure());
@@ -116,5 +122,15 @@ public class ShowAllController implements Initializable {
                 AlertUtils.makeError("Could not delete reservation");
             }
         }
+    }
+
+
+    @FXML
+    private void search(KeyEvent event) {
+        displayData(searchTF.getText());
+    }
+
+    private void specialAction(Reservation reservation) {
+
     }
 }

@@ -1,5 +1,6 @@
 package com.pdev.services;
 
+import com.pdev.entities.Abonnement;
 import com.pdev.entities.Reservation;
 import com.pdev.utils.DatabaseConnection;
 import com.pdev.utils.RelationObject;
@@ -44,7 +45,16 @@ public class ReservationService {
             while (resultSet.next()) {
                 listReservation.add(new Reservation(
                         resultSet.getInt("id"),
-                        new RelationObject(resultSet.getInt("abonnement_id"), resultSet.getString("y.titre")),
+                        new Abonnement(
+                                resultSet.getInt("y.id"),
+                                resultSet.getString("y.type"),
+                                resultSet.getString("y.titre"),
+                                resultSet.getFloat("y.prix"),
+                                resultSet.getInt("y.duree"),
+                                resultSet.getString("y.niveau_access"),
+                                resultSet.getInt("y.reservations_total"),
+                                resultSet.getInt("y.reservations_restantes")
+                        ),
                         new RelationObject(resultSet.getInt("joueur_id"), resultSet.getString("j.email")),
                         new RelationObject(resultSet.getInt("entraineur_id"), resultSet.getString("e.ld")),
                         resultSet.getString("sujet"),
@@ -57,20 +67,6 @@ public class ReservationService {
             System.out.println("Error (getAll) reservation : " + exception.getMessage());
         }
         return listReservation;
-    }
-
-    public List<RelationObject> getAllAbonnements() {
-        List<RelationObject> listAbonnements = new ArrayList<>();
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM `abonnement`");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                listAbonnements.add(new RelationObject(resultSet.getInt("id"), resultSet.getString("titre")));
-            }
-        } catch (SQLException exception) {
-            System.out.println("Error (getAll) abonnements : " + exception.getMessage());
-        }
-        return listAbonnements;
     }
 
     public List<RelationObject> getAllJoueurs() {

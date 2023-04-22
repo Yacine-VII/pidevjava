@@ -105,98 +105,77 @@ public class ManageController implements Initializable {
 
 
     private boolean controleDeSaisie() {
-    if (typeTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("type ne doit pas etre vide");
-        return false;
-    }
 
-    if (titreTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("titre ne doit pas etre vide");
-        return false;
-    }
 
-    if (prixTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("prix ne doit pas etre vide");
-        return false;
-    }
+        if (typeTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("type ne doit pas etre vide");
+            return false;
+        }
 
-    float prix = 0.0f;
-    try {
-        prix = Float.parseFloat(prixTF.getText());
-    } catch (NumberFormatException ignored) {
-        AlertUtils.makeInformation("prix doit etre un réel");
-        return false;
-    }
 
-    if (prix < 10.0f || prix > 80.0f) {
-        AlertUtils.makeInformation("prix doit etre entre 10 et 80");
-        return false;
-    }
+        if (titreTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("titre ne doit pas etre vide");
+            return false;
+        }
 
-    if (dureeTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("duree ne doit pas etre vide");
-        return false;
-    }
 
-    int duree = 0;
-    try {
-        duree = Integer.parseInt(dureeTF.getText());
-    } catch (NumberFormatException ignored) {
-        AlertUtils.makeInformation("duree doit etre un nombre");
-        return false;
-    }
+        if (prixTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("prix ne doit pas etre vide");
+            return false;
+        }
 
-    if (duree < 10 || duree > 60) {
-        AlertUtils.makeInformation("duree doit etre entre 10 et 60");
-        return false;
-    }
 
-    if (niveauAccessTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("niveauAccess ne doit pas etre vide");
-        return false;
-    }
+        try {
+            Float.parseFloat(prixTF.getText());
+        } catch (NumberFormatException ignored) {
+            AlertUtils.makeInformation("prix doit etre un réel");
+            return false;
+        }
+        if (dureeTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("duree ne doit pas etre vide");
+            return false;
+        }
 
-    if (reservationsTotalTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("reservationsTotal ne doit pas etre vide");
-        return false;
-    }
 
-    int reservationsTotal = 0;
-    try {
-        reservationsTotal = Integer.parseInt(reservationsTotalTF.getText());
-    } catch (NumberFormatException ignored) {
-        AlertUtils.makeInformation("reservationsTotal doit etre un nombre");
-        return false;
-    }
+        try {
+            Integer.parseInt(dureeTF.getText());
+        } catch (NumberFormatException ignored) {
+            AlertUtils.makeInformation("duree doit etre un nombre");
+            return false;
+        }
 
-    if (reservationsTotal < 0) {
-        AlertUtils.makeInformation("reservationsTotal doit etre un nombre positif");
-        return false;
-    }
+        if (niveauAccessTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("niveauAccess ne doit pas etre vide");
+            return false;
+        }
 
-    if (reservationsRestantesTF.getText().isEmpty()) {
-        AlertUtils.makeInformation("reservationsRestantes ne doit pas etre vide");
-        return false;
-    }
 
-    int reservationsRestantes = 0;
-    try {
-        reservationsRestantes = Integer.parseInt(reservationsRestantesTF.getText());
-    } catch (NumberFormatException ignored) {
-        AlertUtils.makeInformation("reservationsRestantes doit etre un nombre");
-        return false;
-    }
+        if (reservationsTotalTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("reservationsTotal ne doit pas etre vide");
+            return false;
+        }
 
-    if (reservationsRestantes < 0) {
-        AlertUtils.makeInformation("reservationsRestantes doit etre un nombre positif");
-        return false;
-    }
 
-    if (reservationsRestantes > reservationsTotal) {
-        AlertUtils.makeInformation("reservationsRestantes ne doit pas etre superieur a reservationsTotal");
-        return false;
-    }
+        try {
+            Integer.parseInt(reservationsTotalTF.getText());
+        } catch (NumberFormatException ignored) {
+            AlertUtils.makeInformation("reservationsTotal doit etre un nombre");
+            return false;
+        }
 
-    return true;
-}
+        if (reservationsRestantesTF.getText().isEmpty()) {
+            AlertUtils.makeInformation("reservationsRestantes ne doit pas etre vide");
+            return false;
+        }
+
+
+        try {
+            Integer.parseInt(reservationsRestantesTF.getText());
+        } catch (NumberFormatException ignored) {
+            AlertUtils.makeInformation("reservationsRestantes doit etre un nombre");
+            return false;
+        }
+
+        return true;
+    }
 }

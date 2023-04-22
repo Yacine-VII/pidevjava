@@ -20,6 +20,17 @@
                 </font>
             </Text>
         </StackPane>
+        <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Tri par" textAlignment="JUSTIFY" textOrigin="CENTER" AnchorPane.leftAnchor="220.0"
+              AnchorPane.topAnchor="24.0">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Text>
+        <ComboBox fx:id="sortCB" layoutX="180.0" layoutY="23.0" onAction="#sort" prefWidth="300.0"
+                  promptText="Choisir un attribut" styleClass="form-control-white" AnchorPane.bottomAnchor="10.0"
+                  AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="10.0"/>
+
     </AnchorPane>
     <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="140.0" maxHeight="-Infinity" maxWidth="-Infinity"
                 pannable="true" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0"

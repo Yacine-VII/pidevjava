@@ -1,7 +1,6 @@
 package com.pdev.utils;
 
 import javafx.scene.control.Alert;
-import javafx.util.Duration;
 
 public class AlertUtils {
 

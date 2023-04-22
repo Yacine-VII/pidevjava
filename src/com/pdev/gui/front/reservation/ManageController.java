@@ -1,8 +1,10 @@
 package com.pdev.gui.front.reservation;
 
 
+import com.pdev.entities.Abonnement;
 import com.pdev.entities.Reservation;
 import com.pdev.gui.front.MainWindowController;
+import com.pdev.services.AbonnementService;
 import com.pdev.services.ReservationService;
 import com.pdev.utils.AlertUtils;
 import com.pdev.utils.Constants;
@@ -17,13 +19,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ManageController implements Initializable {
 
     @FXML
-    public ComboBox<RelationObject> abonnementCB;
+    public ComboBox<Abonnement> abonnementCB;
     @FXML
     public ComboBox<RelationObject> joueurCB;
     @FXML
@@ -45,7 +46,7 @@ public class ManageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        for (RelationObject abonnement : ReservationService.getInstance().getAllAbonnements()) {
+        for (Abonnement abonnement : AbonnementService.getInstance().getAll()) {
             abonnementCB.getItems().add(abonnement);
         }
         for (RelationObject joueur : ReservationService.getInstance().getAllJoueurs()) {
@@ -93,11 +94,19 @@ public class ManageController implements Initializable {
             );
 
             if (currentReservation == null) {
-                if (ReservationService.getInstance().add(reservation)) {
-                    AlertUtils.makeSuccessNotification("Reservation ajouté avec succés");
-                    MainWindowController.getInstance().loadInterface(Constants.FXML_FRONT_DISPLAY_ALL_RESERVATION);
+                Abonnement abonnement = reservation.getAbonnement();
+                if (abonnement.getReservationsRestantes() < 1) {
+                    AlertUtils.makeError("Abonnement complet");
                 } else {
-                    AlertUtils.makeError("Erreur");
+                    if (ReservationService.getInstance().add(reservation)) {
+                        abonnement.setReservationsRestantes(abonnement.getReservationsRestantes() - 1);
+                        if (AbonnementService.getInstance().edit(abonnement)) {
+                            AlertUtils.makeSuccessNotification("Reservation ajouté avec succés");
+                            MainWindowController.getInstance().loadInterface(Constants.FXML_FRONT_DISPLAY_ALL_RESERVATION);
+                        }
+                    } else {
+                        AlertUtils.makeError("Erreur");
+                    }
                 }
             } else {
                 reservation.setId(currentReservation.getId());

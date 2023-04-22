@@ -22,6 +22,13 @@
                 </font>
             </Text>
         </StackPane>
+        <TextField fx:id="searchTF" alignment="CENTER" onKeyReleased="#search" prefHeight="50.0" prefWidth="350.0"
+                   promptText="Rechercher par abonnement" styleClass="form-control-white" AnchorPane.leftAnchor="250.0"
+                   AnchorPane.topAnchor="10.0">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </TextField>
         <Button fx:id="addButton" layoutX="536.0" layoutY="10.0" mnemonicParsing="false" onAction="#ajouterReservation"
                 prefHeight="51.0" prefWidth="116.0" styleClass="top-button" text="Ajouter" textAlignment="CENTER"
                 wrapText="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">

@@ -37,7 +37,7 @@ public class MainApp extends Application {
     public void loadLogin() {
         loadScene(
                 Constants.FXML_LOGIN,
-                "Welcome",
+                "Connexion",
                 550,
                 250,
                 true
@@ -66,7 +66,7 @@ public class MainApp extends Application {
 
     public void logout() {
 
-        System.out.println("Go Back ..");
+        System.out.println("Deconnexion ..");
         loadLogin();
     }
 

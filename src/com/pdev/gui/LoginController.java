@@ -15,12 +15,12 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-/*
+
     @FXML
     public void frontend(ActionEvent actionEvent) {
         MainApp.getInstance().loadFront();
     }
-*/
+
     @FXML
     public void backend(ActionEvent actionEvent) {
         MainApp.getInstance().loadBack();

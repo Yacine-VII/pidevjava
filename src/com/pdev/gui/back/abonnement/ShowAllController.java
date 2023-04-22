@@ -20,9 +20,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.*;
 
 public class ShowAllController implements Initializable {
@@ -35,12 +41,15 @@ public class ShowAllController implements Initializable {
     public Button addButton;
     @FXML
     public VBox mainVBox;
+    @FXML
+    public ComboBox<String> sortCB;
 
     List<Abonnement> listAbonnement;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         listAbonnement = AbonnementService.getInstance().getAll();
+        sortCB.getItems().addAll("Type", "Titre", "Prix", "Duree", "NiveauAccess", "ReservationsTotal", "ReservationsRestantes");
         displayData();
     }
 
@@ -80,7 +89,6 @@ public class ShowAllController implements Initializable {
             ((Text) innerContainer.lookup("#reservationsTotalText")).setText("ReservationsTotal : " + abonnement.getReservationsTotal());
             ((Text) innerContainer.lookup("#reservationsRestantesText")).setText("ReservationsRestantes : " + abonnement.getReservationsRestantes());
 
-
             ((Button) innerContainer.lookup("#editButton")).setOnAction((event) -> modifierAbonnement(abonnement));
             ((Button) innerContainer.lookup("#deleteButton")).setOnAction((event) -> supprimerAbonnement(abonnement));
 
@@ -118,5 +126,13 @@ public class ShowAllController implements Initializable {
                 AlertUtils.makeError("Could not delete abonnement");
             }
         }
+    }
+
+
+    @FXML
+    public void sort(ActionEvent actionEvent) {
+        Constants.compareVar = sortCB.getValue();
+        Collections.sort(listAbonnement);
+        displayData();
     }
 }

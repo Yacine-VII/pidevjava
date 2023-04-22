@@ -122,4 +122,8 @@ public class Abonnement implements Comparable<Abonnement> {
         }
     }
 
+    @Override
+    public String toString() {
+        return titre;
+    }
 }

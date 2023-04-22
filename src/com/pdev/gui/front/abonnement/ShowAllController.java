@@ -31,12 +31,15 @@ public class ShowAllController implements Initializable {
     public Text topText;
 
     public VBox mainVBox;
+    @FXML
+    public ComboBox<String> sortCB;
 
     List<Abonnement> listAbonnement;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         listAbonnement = AbonnementService.getInstance().getAll();
+        sortCB.getItems().addAll("Type", "Titre", "Prix", "Duree", "NiveauAccess", "ReservationsTotal", "ReservationsRestantes");
         displayData();
     }
 
@@ -81,5 +84,17 @@ public class ShowAllController implements Initializable {
             System.out.println(ex.getMessage());
         }
         return parent;
+    }
+
+
+    @FXML
+    public void sort(ActionEvent actionEvent) {
+        Constants.compareVar = sortCB.getValue();
+        Collections.sort(listAbonnement);
+        displayData();
+    }
+
+    private void specialAction(Abonnement abonnement) {
+
     }
 }
