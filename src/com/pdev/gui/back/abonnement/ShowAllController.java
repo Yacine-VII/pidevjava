@@ -1,5 +1,9 @@
 package com.pdev.gui.back.abonnement;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.pdev.entities.Abonnement;
 import com.pdev.gui.back.MainWindowController;
 import com.pdev.services.AbonnementService;
@@ -21,6 +25,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 import java.awt.*;
 import java.io.File;
@@ -89,8 +98,10 @@ public class ShowAllController implements Initializable {
             ((Text) innerContainer.lookup("#reservationsTotalText")).setText("ReservationsTotal : " + abonnement.getReservationsTotal());
             ((Text) innerContainer.lookup("#reservationsRestantesText")).setText("ReservationsRestantes : " + abonnement.getReservationsRestantes());
 
+
             ((Button) innerContainer.lookup("#editButton")).setOnAction((event) -> modifierAbonnement(abonnement));
             ((Button) innerContainer.lookup("#deleteButton")).setOnAction((event) -> supprimerAbonnement(abonnement));
+            ((Button) innerContainer.lookup("#generatePdfButton")).setOnAction((event) -> genererPDF(abonnement));
 
 
         } catch (IOException ex) {
@@ -134,5 +145,94 @@ public class ShowAllController implements Initializable {
         Constants.compareVar = sortCB.getValue();
         Collections.sort(listAbonnement);
         displayData();
+    }
+
+    private void genererPDF(Abonnement abonnement) {
+        Document document = new Document();
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, Files.newOutputStream(Paths.get("abonnement.pdf")));
+            document.open();
+
+            com.itextpdf.text.Font font = new com.itextpdf.text.Font();
+            font.setSize(20);
+
+            document.add(new Paragraph("- Abonnement -"));
+            document.add(new Paragraph("Type : " + abonnement.getType()));
+            document.add(new Paragraph("Titre : " + abonnement.getTitre()));
+            document.add(new Paragraph("Prix : " + abonnement.getPrix()));
+            document.add(new Paragraph("Duree : " + abonnement.getDuree()));
+            document.add(new Paragraph("NiveauAccess : " + abonnement.getNiveauAccess()));
+            document.add(new Paragraph("ReservationsTotal : " + abonnement.getReservationsTotal()));
+            document.add(new Paragraph("ReservationsRestantes : " + abonnement.getReservationsRestantes()));
+
+
+            document.newPage();
+            document.close();
+
+            writer.close();
+
+            Desktop.getDesktop().open(new File("abonnement.pdf"));
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void genererExcel(ActionEvent actionEvent) {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        try {
+            FileChooser chooser = new FileChooser();
+            // Set extension filter
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(.xls)", ".xls");
+            chooser.getExtensionFilters().add(filter);
+
+            HSSFSheet workSheet = workbook.createSheet("sheet 0");
+            workSheet.setColumnWidth(1, 25);
+
+            HSSFFont fontBold = workbook.createFont();
+            fontBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+            HSSFCellStyle styleBold = workbook.createCellStyle();
+            styleBold.setFont(fontBold);
+
+            Row row1 = workSheet.createRow((short) 0);
+            row1.createCell(0).setCellValue("Id");
+            row1.createCell(1).setCellValue("Type");
+            row1.createCell(2).setCellValue("Titre");
+            row1.createCell(3).setCellValue("Prix");
+            row1.createCell(4).setCellValue("Duree");
+            row1.createCell(5).setCellValue("Niveau Access");
+            row1.createCell(6).setCellValue("Reservations Total");
+            row1.createCell(7).setCellValue("Reservations Restantes");
+
+            int i = 0;
+            for (Abonnement abonnement : listAbonnement) {
+                i++;
+                Row row2 = workSheet.createRow((short) i);
+                row2.createCell(0).setCellValue(abonnement.getId());
+                row2.createCell(1).setCellValue(abonnement.getType());
+                row2.createCell(2).setCellValue(abonnement.getTitre());
+                row2.createCell(3).setCellValue(abonnement.getPrix());
+                row2.createCell(4).setCellValue(abonnement.getDuree());
+                row2.createCell(5).setCellValue(abonnement.getNiveauAccess());
+                row2.createCell(6).setCellValue(abonnement.getReservationsTotal());
+                row2.createCell(7).setCellValue(abonnement.getReservationsRestantes());
+            }
+
+            workSheet.autoSizeColumn(0);
+            workSheet.autoSizeColumn(1);
+            workSheet.autoSizeColumn(2);
+            workSheet.autoSizeColumn(3);
+            workSheet.autoSizeColumn(4);
+            workSheet.autoSizeColumn(5);
+            workSheet.autoSizeColumn(6);
+            workSheet.autoSizeColumn(7);
+
+            workbook.write(Files.newOutputStream(Paths.get("reclamation.xls")));
+            Desktop.getDesktop().open(new File("reclamation.xls"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
